@@ -26,7 +26,6 @@ public class ClubDatabaseDaoImplTest {
     @Ignore("Test is ignored because it requires clubDB server to run.")
     @Test
     public void getUsers(){
-        // TODO 5.3: odstraňte @Ignore a spusťte test proti testovacímu prostředí ClubDB.
         List<User> users = testSubject.getUsers();
 
         assertNotNull(users);

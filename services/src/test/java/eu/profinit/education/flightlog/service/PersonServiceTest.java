@@ -92,8 +92,22 @@ public class PersonServiceTest {
     @Ignore("Test is not implemented")
     @Test
     public void shouldCreateNewClubMember() {
-        // TODO 7.1: Naimplementujte unit test s pouzitim mocku
+        PersonTo newMember = PersonTo.builder()
+            .memberId(42L)
+            .build();
 
+        Person expected = Person.builder().personType(Person.Type.CLUB_MEMBER).memberId(42L).build();
+        User testUser = new User(42L, "Adam", "Jolly", Arrays.asList("PILOT"));
+
+        when(clubDatabaseDao.getUsers()).thenReturn(Arrays.asList(testUser));
+        when(personRepository.findByMemberId(42L)).thenReturn(Optional.empty());
+        when(personRepository.save(any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
+
+        // call tested method
+        Person person = testSubject.getExistingOrCreatePerson(newMember);
+
+        // verify results
+        assertEquals(expected.getMemberId(), person.getMemberId());
     }
 
 

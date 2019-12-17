@@ -1,13 +1,7 @@
 package eu.profinit.education.flightlog.domain.entities;
 
 import eu.profinit.education.flightlog.domain.JpaConstants;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.Entity;
@@ -25,9 +19,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
+@EqualsAndHashCode
 public class Person {
 
     @Id

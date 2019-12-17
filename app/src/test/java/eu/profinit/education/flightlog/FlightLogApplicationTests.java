@@ -39,8 +39,6 @@ public class FlightLogApplicationTests {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    // TODO: 2.6 Smažte ignore a spusťte test po implementaci FlightService.getFlightsInTheAir
-    @Ignore("Method /flight/inAir is not implemented at service layer")
 	@Test
     public void flightsInAirAndLanding() throws Exception {
         ResponseEntity<List<Map>> flightsResponse = restTemplate.exchange("/flight/inAir", HttpMethod.GET, null, new ParameterizedTypeReference<List<Map>>(){});

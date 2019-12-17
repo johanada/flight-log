@@ -79,7 +79,11 @@
                 <artifactId>activation</artifactId>
                 <version>${javax.activation.version}</version>
             </dependency>
-            <!-- TODO 4.1: přidejte závislost na knihovně pro práci s CSV s verzí definovanou <properties> -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-csv</artifactId>
+                <version>${apache.commons.csv.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
