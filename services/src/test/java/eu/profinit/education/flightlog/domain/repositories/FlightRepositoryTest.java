@@ -35,14 +35,14 @@ public class FlightRepositoryTest {
     @Ignore("Testovana metoda neni implementovana")
     @Test
     public void shouldLoadGliderFlights() {
-        List<Flight> flights = testSubject.findAllByFlightTypeOrderByTakeoffTimeAsc(Flight.Type.GLIDER);
+        List<Flight> flights = testSubject.findAllByFlightTypeOrderByTakeoffTimeDesc(Flight.Type.GLIDER);
         assertEquals("There should be 2 glider flights", 2, flights.size());
     }
 
     @Ignore("Testovana metoda neni implementovana")
     @Test
     public void shouldLoadFlightsInTheAir() {
-        List<Flight> flights = testSubject.findAllByLandingTimeIsNullOrderByTakeoffTimeAscIdAscFlightTypeDesc();
+        List<Flight> flights = testSubject.findAllByLandingTimeIsNullOrderByTakeoffTimeDescFlightTypeDesc();
         assertEquals("There should be 3 flights", 3, flights.size());
         assertEquals("Flight with ID 5 started first and should be first", 5L, flights.get(0).getId().getId().longValue());
         assertEquals("Flight with ID 1 should be second", 1L, flights.get(1).getId().getId().longValue());

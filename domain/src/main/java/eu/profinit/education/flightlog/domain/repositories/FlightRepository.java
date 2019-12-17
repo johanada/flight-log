@@ -9,13 +9,13 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     List<Flight> findAll();
 
-    List<Flight> findAllByFlightTypeOrderByTakeoffTimeAsc(Flight.Type flightType);
+    List<Flight> findAllByFlightTypeOrderByTakeoffTimeDesc(Flight.Type flightType);
 
     // Lety by se měly řadit od nejstarších a v případě shody podle ID tak, aby vlečná byla před kluzákem, který táhne
     // Výsledek si můžete ověřit v testu k této tříde v modulu services
-    List<Flight> findAllByLandingTimeIsNullOrderByTakeoffTimeAscIdAscFlightTypeDesc();
+    List<Flight> findAllByLandingTimeIsNullOrderByTakeoffTimeDescFlightTypeDesc();
 
-    List<Flight> findAllByLandingTimeIsNotNullOrderByTakeoffTimeAscIdAscFlightTypeDesc();
+    List<Flight> findAllByLandingTimeIsNotNullOrderByTakeoffTimeDescFlightTypeDesc();
 
 }
 

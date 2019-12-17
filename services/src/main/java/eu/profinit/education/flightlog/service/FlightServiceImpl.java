@@ -108,19 +108,22 @@ public class FlightServiceImpl implements FlightService {
     @Transactional(readOnly = true)
     @Override
     public List<FlightTo> getFlightsInTheAir() {
-        // Můžete použít Java 8 Stream API pro konverzi na Transfer Object (TO)
-        return flightRepository.findAllByLandingTimeIsNullOrderByTakeoffTimeAscIdAscFlightTypeDesc().stream().map(FlightTo::fromEntity).collect(Collectors.toList());
+        return flightRepository.findAllByLandingTimeIsNullOrderByTakeoffTimeDescFlightTypeDesc().stream().map(FlightTo::fromEntity).collect(Collectors.toList());
     }
 
     @Override
     public List<FlightTuppleTo> getFlightsForReport() {
         // TODO: Optimalizovat
-        List<FlightTo> towplanes = flightRepository.findAllByFlightTypeOrderByTakeoffTimeAsc(Flight.Type.TOWPLANE).stream().map(FlightTo::fromEntity).collect(Collectors.toList());
-        List<FlightTo> gliders = flightRepository.findAllByFlightTypeOrderByTakeoffTimeAsc(Flight.Type.GLIDER).stream().map(FlightTo::fromEntity).collect(Collectors.toList());
+        List<FlightTo> towplanes = flightRepository.findAllByFlightTypeOrderByTakeoffTimeDesc(Flight.Type.TOWPLANE).stream().map(FlightTo::fromEntity).collect(Collectors.toList());
+        List<FlightTo> gliders = flightRepository.findAllByFlightTypeOrderByTakeoffTimeDesc(Flight.Type.GLIDER).stream().map(FlightTo::fromEntity).collect(Collectors.toList());
         List<FlightTuppleTo> tupples = new ArrayList<>();
         for (FlightTo glider : gliders) {
             tupples.add(new FlightTuppleTo(getPairedTowplane(glider, towplanes), glider));
         }
+        for (FlightTo towplane : towplanes) {
+            tupples.add(new FlightTuppleTo(towplane, null));
+        }
+        sortFlights(tupples);
         return tupples;
     }
 
@@ -138,5 +141,16 @@ public class FlightServiceImpl implements FlightService {
         }
 
         return null;
+    }
+
+    private void sortFlights(List<FlightTuppleTo> tupples) {
+        tupples.sort((t1, t2) -> {
+            if (t1.getTowplane().getTakeoffTime().isBefore(t2.getTowplane().getTakeoffTime())) {
+                return 1;
+            } else if (t1.getTowplane().getTakeoffTime().isAfter(t2.getTowplane().getTakeoffTime())) {
+                return -1;
+            }
+            return 0;
+        });
     }
 }

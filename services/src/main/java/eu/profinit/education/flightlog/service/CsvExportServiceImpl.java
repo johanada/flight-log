@@ -6,9 +6,7 @@ import eu.profinit.education.flightlog.exceptions.FlightLogException;
 import eu.profinit.education.flightlog.to.FileExportTo;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +38,7 @@ public class CsvExportServiceImpl implements CsvExportService {
 
     @Override
     public FileExportTo getAllFlightsAsCsv() {
-        final List<Flight> flights = flightRepository.findAllByLandingTimeIsNotNullOrderByTakeoffTimeAscIdAscFlightTypeDesc();
+        final List<Flight> flights = flightRepository.findAllByLandingTimeIsNotNullOrderByTakeoffTimeDescFlightTypeDesc();
         try (ByteArrayOutputStream stream = new ByteArrayOutputStream();
              Writer printWriter = new OutputStreamWriter(stream, (Charset.forName(ENCODING)));
              CSVPrinter csvExport = new CSVPrinter(printWriter, CSVFormat.EXCEL.withHeader(
