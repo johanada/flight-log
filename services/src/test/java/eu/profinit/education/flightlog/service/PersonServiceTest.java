@@ -89,7 +89,6 @@ public class PersonServiceTest {
 
     }
 
-    @Ignore("Test is not implemented")
     @Test
     public void shouldCreateNewClubMember() {
         PersonTo newMember = PersonTo.builder()

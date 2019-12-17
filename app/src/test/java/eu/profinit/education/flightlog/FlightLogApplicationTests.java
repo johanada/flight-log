@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ public class FlightLogApplicationTests {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Ignore
 	@Test
     public void flightsInAirAndLanding() throws Exception {
         ResponseEntity<List<Map>> flightsResponse = restTemplate.exchange("/flight/inAir", HttpMethod.GET, null, new ParameterizedTypeReference<List<Map>>(){});
