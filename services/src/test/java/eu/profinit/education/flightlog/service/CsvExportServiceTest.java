@@ -2,6 +2,7 @@ package eu.profinit.education.flightlog.service;
 
 import eu.profinit.education.flightlog.IntegrationTestConfig;
 import eu.profinit.education.flightlog.to.FileExportTo;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = IntegrationTestConfig.class)
@@ -22,12 +27,13 @@ public class CsvExportServiceTest {
     @Autowired
     private CsvExportService testSubject;
 
-    // TODO 6.1: Odstrante anotaci @Ignore, aby se test vykonaval
-    @Ignore("Tested method is not implemented yet")
     @Test
-    public void testCSVExport() {
+    public void testCSVExport() throws IOException, URISyntaxException {
         FileExportTo allFlightsAsCsv = testSubject.getAllFlightsAsCsv();
+        Assert.assertEquals(readFileToString("expectedExport.csv"), new String(allFlightsAsCsv.getContent()));
+    }
 
-        // TODO 6.2: zkontrolujte obsah CSV
+    private String readFileToString(String fileName) throws URISyntaxException, IOException {
+        return new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(fileName).toURI())));
     }
 }

@@ -56,10 +56,10 @@ public class CsvExportServiceImpl implements CsvExportService {
                     getTime(flight.getLandingTime()),
                     getFlightLength(flight.getTakeoffTime(), flight.getLandingTime()),
                     flight.getNote(),
-                    flight.getPilot().getAddress().getStreet(),
-                    flight.getPilot().getAddress().getCity(),
-                    flight.getPilot().getAddress().getPostalCode(),
-                    flight.getPilot().getAddress().getCountry()
+                    flight.getPilot().getAddress() != null ? flight.getPilot().getAddress().getStreet() : null,
+                    flight.getPilot().getAddress() != null ? flight.getPilot().getAddress().getCity() : null,
+                    flight.getPilot().getAddress() != null ? flight.getPilot().getAddress().getPostalCode() : null,
+                    flight.getPilot().getAddress() != null ? flight.getPilot().getAddress().getCountry() : null
                     );
             }
             csvExport.flush();
